@@ -1,0 +1,26 @@
+d 'LEVELSOF2': an alternative to the levelsof command.
+d
+d levelsof2 provides nearly identical functionality to the levelsof command, but 
+d provides access to the distinct/unique values in the order in which they occur
+d in the data set in addition to sorted values.  
+d
+d If you notice any issues with the programs, please submit an issue at 
+d https://github.com/wbuchanan/levelsof2/issues/.
+d
+d KW: Utilities
+d KW: Distinct 
+d KW: Unique
+d
+d Requires: Stata version 13.1
+d
+d Distribution-Date: 20160413
+d
+d Author: Billy Buchanan 
+d		  Data Scientist
+d		  Office of Research, Evaluation, and Assessment
+d		  Minneapolis Public Schools
+d Support: email William [dot] Buchanan @t mpls [dot] k12 [dot] mn [dot] us
+d
+f levelsof2.ado
+f levelsof2.mata
+f levelsof2.sthlp
