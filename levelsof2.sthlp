@@ -1,27 +1,20 @@
 {smcl}
 {* *! version 0.0.1 13apr2016}{...}
 {vieweralsosee "[P] levelsof" "mansection P levelsof"}{...}
-{viewerjumpto "Syntax" "levelsof##syntax"}{...}
-{viewerjumpto "Description" "levelsof##description"}{...}
-{viewerjumpto "Options" "levelsof##options"}{...}
-{viewerjumpto "Remarks" "levelsof##remarks"}{...}
-{viewerjumpto "Examples" "levelsof##examples"}{...}
-{viewerjumpto "Stored results" "levelsof##results"}{...}
-{viewerjumpto "References" "levelsof##references"}{...}
-{title:Title}
 
-{p2colset 5 21 23 2}{...}
-{p2col :{manlink P levelsof} {hline 2}}Levels of variable{p_end}
-{p2colreset}{...}
+{hline}
+Accessing distinct values of a variable in the order the values appear in the data.
+{hline}
 
-{marker syntax}{...}
+{title:help for levelsof2}
+
+{p 4 4 4}{hi:levelsof2 {hline 2}} is an alternative implementation to the 
+{manlink P levelsof} command that provides a way to access the values in the 
+order in which they occur in the dataset.{p_end}
+
 {title:Syntax}
 
-{p 8 17 2}
-{cmd:levelsof}
-{varname}
-{ifin}
-[{cmd:,} {it:options}]
+{p 4 4 4}{cmd:levelsof2} {varname} {ifin} [{cmd:,} {it:options} ]{p_end}
 
 {synoptset 21}{...}
 {synopthdr}
@@ -36,49 +29,38 @@
 {synoptline}
 {p2colreset}{...}
 
-
-{marker description}{...}
-{title:Description}
-
-{pstd}
-{cmd:levelsof2} displays and returns a list of the unique values of {varname} in 
-the order it appears in the dataset, or optionally in sorted order.
-
-
-
 {marker options}{...}
 {title:Options}
 
-{p 4 4 4}{hi:Material below is filler from levelsof will be altered soon}{p_end}
 
-{phang}
-{cmd:local(}{it:macname}{cmd:)} inserts the list of values in
-local macro {it:macname} within the calling program's space.  Hence,
-that macro will be accessible after {cmd:levelsof} has finished.
-This is helpful for subsequent use, especially with {helpb foreach}.
+{p 4 4 8}{cmd:local} will attempt to place the list of values in a local macro 
+named with the argument passed to this parameter.  In cases where the length of 
+the list is greater than the maximum allowable size of a macro, it will attempt 
+to create a series of macros with the name and numeric indices indicating the 
+order of the segments.  Regardless of the size, the results can be accessed in 
+a scalar named levels that contains all of the elements.{p_end}
 
-{phang}
-{cmd:separate(}{it:separator}{cmd:)} specifies a separator
-to serve as punctuation for the values of the returned list.
-The default is a space.  A useful alternative is a comma.
+{p 4 4 8}{cmd:separate} used to specify a token delimiter for the list elements. 
+This can be used to create comma delimited lists that can be passed to functions 
+such as {help inlist) in subsequent commands. {p_end}
 
-{phang}
-{cmd:clean} displays string values without compound double quotes.
-By default, each distinct string value is displayed within compound double
-quotes, as these are the most general delimiters.  If you know that the
-string values in {varname} do not include embedded spaces or embedded
-quotes, this is an appropriate option.  {cmd:clean} 
-does not affect the display of values from numeric variables.
+{p 4 4 8}{cmd:clean} encloses string elements that contain any quotation mark 
+characters (e.g., left/right tick or quotation marks) in compound double quotes 
+or encloses the string elements in double quotation marks.  This will also trigger 
+the full list of results to be wrapped in compound double quotes.  This option 
+{hi:does not} affect the results from numeric variables.{p_end}
 
-{phang}
-{cmd:missing} specifies that missing values of {varname}
-should be included in the calculation.  The default is to exclude them.
+{p 4 4 8}{cmd:missing} specifies that missing values of {varname}
+should be included in the calculation.  The default is to exclude them. {p_end}
 
-{phang}
-{cmd:sorted}
+{p 4 4 8}{cmd:sorted} will return the results in sorted order.  This is nearly 
+identical to the behavior of {help levelsof} with the exception of the placement 
+of missing values.  {it:Missing numeric values will appear first with this option}.{p_end}
 
-{phang}
-{cmd:compile}
+{p 4 4 8}{cmd:compile} is an option used to compile the underlying Mata code into 
+an object file.  If the option is specified it will overwrite an existing copy of 
+the compiled object file.  If the option is not specified the program will check 
+to see if the object file exists or will first run the Mata source.{p_end}
 
 {marker remarks}{...}
 {title:Remarks}
@@ -117,6 +99,7 @@ the native {help levelsof} command.
 {synoptset 15 tabbed}{...}
 {p2col 5 15 19 2: Macros}{p_end}
 {synopt:{cmd:r(levels)}}list of distinct values{p_end}
+{synopt:{cmd:r(distinct)}}number of distinct values{p_end}
 {p2colreset}{...}
 
 {pstd}

@@ -11,8 +11,9 @@ mata:
  * @param clean Attempt cleaning up returned values 
  * @param sorted
 */
-void levelsof2(	string scalar var, string scalar idx, |  string scalar sep,  ///   
-				string scalar clean, string scalar sorted) {
+transmorphic matrix levelsof2(	string scalar var, string scalar idx, |  	 ///   
+								string scalar sep, string scalar clean, 	 ///   
+								string scalar sorted) {
 	
 	// Matrix used to store the observation index created by levelsof2
 	// Also declares the matrix used to store the observation index where each 
@@ -79,7 +80,7 @@ void levelsof2(	string scalar var, string scalar idx, |  string scalar sep,  ///
 		minindices[i, 1] = min(selectindex(variableValues[., 1] :== uvals[i, 1]))
 		
 	} // End Loop over unique values
-	
+		
 	// For numeric variables, the matrix of returned values will select the 
 	// values of the variable of interest based on the sorted order of 
 	// the observation indices (e.g., the order of data in the dataset) and cast 
@@ -97,11 +98,20 @@ void levelsof2(	string scalar var, string scalar idx, |  string scalar sep,  ///
 		for(i = 1; i <= rows(minindices); i++) {
 			
 			// Check for clean option
-			if (clean != "") {
+			if (clean != "" & regexm(variableValues[i, 1], `"`|"|'"') == 1) {
 			
 				// If string contains any quottation marks enclose it in 
 				// compound double quotes
 				variableValues[i, 1] = open + variableValues[i, 1] + close
+		
+			} // End IF Block for clean 
+			
+			// Check for clean option
+			else if (clean != "" & regexm(variableValues[i, 1], `"`|"|'"') == 0) {
+			
+				// If string contains any quottation marks enclose it in 
+				// compound double quotes
+				variableValues[i, 1] = q + variableValues[i, 1] + q
 		
 			} // End IF Block for clean 
 			
@@ -134,10 +144,22 @@ void levelsof2(	string scalar var, string scalar idx, |  string scalar sep,  ///
 	
 	// If the user specified a separation character insert it when returning the
 	// values to the local macro mylevels
-	if (sep != "") st_strscalar("levels", invtokens(retvals', sep))
+	if (sep != "" & clean == "") st_strscalar("levels", invtokens(retvals', sep))
 	
 	// Otherwise just return the values in the local mylevels
-	else st_strscalar("levels", invtokens(retvals'))
+	else if (sep == "" & clean == "") st_strscalar("levels", invtokens(retvals'))
+	
+	// Otherwise just return the values in the local mylevels
+	else if (sep == "" & clean != "") st_strscalar("levels", open + invtokens(retvals') + close)
+	
+	// Otherwise just return the values in the local mylevels
+	else st_strscalar("levels", open + invtokens(retvals', sep) + close)
+		
+	// Return the number of distinct values
+	st_local("distinct", strofreal(rows(retvals)))
+	
+	// Return the matrix of values
+	return(retvals)
 	
 } // End of Mata function definition
 

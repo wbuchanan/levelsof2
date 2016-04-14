@@ -69,7 +69,8 @@ prog def levelsof2, rclass
 	qui: g `levelsof2var' = _n if `touse'
 	
 	// Call to mata function that does all the leg work
-	qui: mata: levelsof2("`varlist'", "`levelsof2var'", "`separate'", "`clean'", "`sorted'")
+	qui: mata: levelsof2("`varlist'", "`levelsof2var'", "`separate'", 	 	 ///   
+						 "`clean'", "`sorted'")
 
 	// If the scalar can fit inside a macro
 	if (length(levels) <= `maxlen') {
@@ -104,6 +105,9 @@ prog def levelsof2, rclass
 		} // End Loop over the chunks to return
 		
 	} // End ELSE Block when string is too large for a macro	
+	
+	// Return the number of distinct values
+	ret loc distinct = `distinct'
 		
 	// Displays the results
 	di as res levels
