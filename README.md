@@ -1,6 +1,9 @@
 # Stata levelsof implementation for unsorted lists
 Currently the Stata implementation of the `levelsof` command returns a sorted list only.  However, there are cases where maintaining the sort order of the data is necessary.  For example, in the [brewscheme](https://github.com/wbuchanan/brewscheme) package, the RGB values that define a color palette need to be returned in the order specified in the dataset.  But the `levelsof` command does not currently support this.  In addition to the base functionality provided by `levelsof` the `levelsof2` command will return the results in the order in which the data are currently sorted as the default behavior and provides the same functionality as `levelsof` in addition.  The only currently known case where the functionality is not equivalent is in the handling of missing values when sorted.
 
+## Updates
+Project page will be available soon and will have list of examples in addition to helpfile material. 
+
 
 # Example 1
 Getting the unique values from a numeric variable
